@@ -1,0 +1,15 @@
+old_data/
+*.aux
+*.log
+*.bbl
+*.blg
+*synctex*
+*DS_Store
+*~
+agujournaltemplate.tex
+agusuppinfosample.tex
+agujournalsample.tex
+notes.txt
+status.txt
+goodsim/
+*.zip
