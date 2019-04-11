@@ -1,4 +1,4 @@
-
+close all
 clear
 
 %parameter setup1
@@ -61,10 +61,10 @@ for i = 1:ny
     
 end
 
-xdk = figure('units','inches','position',[2,2,10.5,3],...
-    'PaperSize',[10.5,3]);
+xdk = figure('units','inches','position',[2,2,8,3],...
+    'PaperSize',[8,3]);
 
-subplot(1,3,1)
+subplot('Position',[0.1,0.15,0.3,0.8])
 plot(vpd/1000,A,'Linewidth',1.5)
 ylim([0,25])
 xlabel('VPD (kPa)')
@@ -72,13 +72,14 @@ ylabel('GPP (g/m2/d)')
 xlim([0,2.5])
 
 
-subplot(1,3,2)
+subplot('Position',[0.5,0.15,0.475,0.8])
 plot(vpd/1000,ci,'Linewidth',1.5)
 xlabel('VPD (kPa)')
 ylabel('C_i (ppmv)')
 ylim([0,400])
-legend(ll,'Location','northeast')
+legend(ll,'Location','eastoutside')
 xlim([0,2.5])
 
+print(xdk,'fig1','-dpdf')
 
 
