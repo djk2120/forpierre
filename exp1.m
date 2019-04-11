@@ -6,7 +6,6 @@ kmax_other_units = 220;
 kmax  = kmax_other_units/1e6*18;
 kmax_kg          = kmax_other_units*18/1000/1000;
 z     = 30;
-zr    = 3;
 p1    = -1;
 p2    = -4;
 p50   = -1.5;
@@ -34,6 +33,7 @@ ny    = length(pv);
 vpd   = zeros(nx,1);
 pleaf = zeros(nx,ny);
 A     = zeros(nx,ny);
+ci    = zeros(nx,ny);
 
 
 for i = 1:nx
@@ -46,11 +46,37 @@ for i = 1:nx
         psoil = pv(ii);
         pen = [R,rh,T,gsw_max,ga];
         [q,pleaf(i,ii),gsw] = get_vwp(psoil,param,pen);
-        A(i,ii)             = get_A(j,gsw/x);
+        [A(i,ii),ci(i,ii)]  = get_A(j,gsw/x);
     end
 end
 
-subplot(1,1,1)
+
+ll = cell(ny,1);
+for i = 1:ny
+    if i==1
+        ll{i} = ['\psi_s=',num2str(round(pv(i),1)),' MPa'];
+    else
+        ll{i} = [num2str(round(pv(i),1)),' MPa'];
+    end
+    
+end
+
+
+subplot(1,2,1)
 plot(vpd/1000,A,'Linewidth',1.5)
 ylim([0,25])
+legend(ll,'Location','southwest')
+xlabel('VPD (kPa)')
+ylabel('GPP (g/m2/d)')
+
+
+subplot(1,2,2)
+plot(vpd/1000,ci,'Linewidth',1.5)
+legend(ll,'Location','northeast')
+xlabel('VPD (kPa)')
+ylabel('C_i (ppmv)')
+ylim([0,400])
+
+
+
 

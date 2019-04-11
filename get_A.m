@@ -1,4 +1,4 @@
-function  A2=get_A(j,gsc_mol)
+function  [A2,ci]=get_A(j,gsc_mol)
     %get_A, solves for photosynthesis a la Medlyn 2011 et al.
     %   returns
     %     A2, gross photosynthesis [umol/m2/s]
