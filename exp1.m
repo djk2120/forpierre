@@ -36,21 +36,26 @@ A     = zeros(nx,ny);
 ci    = zeros(nx,ny);
 
 
-for i = 1:nx
+for i = 1:nx  %cycle through vpd values
     rh = rv(i);
+    
+    %solve for maximum stomatal conductance
+    %irrespective of psi_soil
     vpd(i) = get_vpd(rh,T);
     gsc_max = medlyn(get_vpd(rh,T)/1000,j);
     gsw_max = gsc_max*x;
     
-    for ii = 1:ny
+    for ii = 1:ny  %cycle through psoil values
         psoil = pv(ii);
-        pen = [R,rh,T,gsw_max,ga];
-        [q,pleaf(i,ii),gsw] = get_vwp(psoil,param,pen);
-        [A(i,ii),ci(i,ii)]  = get_A(j,gsw/x);
+        pen = [R,rh,T,gsw_max,ga];  %arrange the forcing data correctly
+        [q,pleaf(i,ii),gsw] = get_vwp(psoil,param,pen); %solve for leaf potential
+        [A(i,ii),ci(i,ii)]  = get_A(j,gsw/x);  %solve for attenutated GPP
     end
 end
 
 
+
+%plotting
 ll = cell(ny,1);
 for i = 1:ny
     if i==1
