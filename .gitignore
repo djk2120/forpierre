@@ -3,6 +3,7 @@ old_data/
 *.log
 *.bbl
 *.blg
+*.soc
 *synctex*
 *DS_Store
 *~
