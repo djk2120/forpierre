@@ -1,4 +1,4 @@
-function gs= medlyn(vpd,j)
+function gs= medlyn(vpd,j,ga)
     %medlyn, solves for medlyn stomatal conductance
     %   returns
     %    gs, stomatal conductance [mol/ms/s]
@@ -19,7 +19,7 @@ function gs= medlyn(vpd,j)
         ct = ct+1;
 
         gs = g0 + (1+g1/vpd^(0.5))*oldA/Ca  ; %mol/m2/s
-        A  = get_A(j,gs);
+        A  = get_A(j,gs,ga);
 
         if abs(A-oldA)<.001
             go=0;

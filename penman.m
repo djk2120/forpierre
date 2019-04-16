@@ -6,9 +6,7 @@ function q = penman(R,rh,T,gs,ga)
     % gs = m/s
     % ga = m/s, default = 1/20
 
-    if ga<0
-        ga = 1/20;
-    end
+
     
     vpd = get_vpd(rh,T);
     es  = vpd/(1-rh);

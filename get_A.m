@@ -1,4 +1,4 @@
-function  [A2,ci]=get_A(j,gsc_mol)
+function  [A2,ci]=get_A(j,gsc_mol,ga)
     %get_A, solves for photosynthesis a la Medlyn 2011 et al.
     %   returns
     %     A2, gross photosynthesis [umol/m2/s]
@@ -19,7 +19,8 @@ function  [A2,ci]=get_A(j,gsc_mol)
         ci = ci+ jump;
 
         A1 = j/4*(ci-gam)/(ci+2*gam);
-        A2 = gsc_mol*(Ca-ci);
+        g  = 1/(1/gsc_mol+1/ga);
+        A2 = g*(Ca-ci);
 
         if abs(A1-A2)<0.0001
             go   = 0;
