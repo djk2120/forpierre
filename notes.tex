@@ -1,0 +1,53 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{changes}
+\graphicspath{ {/Users/kennedy/Desktop} }
+\usepackage[margin=1in]{geometry}
+\usepackage[parfill]{parskip}  
+\title{Some notes on the simple SPAC deployment \large }
+\author{Daniel Kennedy - djk2120@columbia.edu}
+
+\begin{document}
+\maketitle
+
+\section{Photosynthesis Model}
+This basically consists of four parts:
+\begin{enumerate}
+\item Medlyn model for maximum conductance
+\item SPAC-based down-regulation of $g_s$ to regulate $\psi_l$
+\item Transport of CO$_2$ into the intercellular space
+\item Photochemistry
+\end{enumerate}
+
+We were interested in whether GPP and $\dfrac{C_i}{C_a}$ can increase with increasing VPD in well-watered cases. To start with, given the well-watered stipulation, we can ignore (2) and just focus on Medlyn and how it couples with $C_i$, etc.
+
+Medlyn:
+\begin{equation}
+g_{s}\left[\dfrac{mol}{m^2s}\right] =  g_0+\left(1+\dfrac{g_1}{\sqrt{D}}\right)\dfrac{A}{C_a}
+\end{equation}
+
+The Medlyn paper models photosynthesis as:
+\begin{equation}
+A = \dfrac{J}{4}\dfrac{C_i-\Gamma^*}{C_i+2\Gamma^*}-R_d
+\end{equation}
+Where $J$ is the rate of electron transport, $C_i$ is the intercellular CO$_2$ concentration and $\Gamma *$ is the CO$_2$ compensation point. We'll neglect respiration in our simplified model.
+
+Assuming steady-state, photosynthesis has to be matched by the flux of carbon through the leaf's surface, which I'll call $F_{\text{CO}2}$
+
+\begin{equation}
+F_{\text{CO}2} = g_s\left(C_a-C_i\right)
+\end{equation}
+
+When VPD increases, Medlyn requires that $g_s$ decrease. If you want to achieve the same $F_{\text{CO}2}$ you have to lower $C_i$ to compensate with a larger gradient. However, that compensation will inhibit photochemistry, because $A$ is an increasing function of $C_i$. As a result, (with all else equal) the equilibrium resulting from the lower $g_s$ will reduce $C_i$, but in such a way that the increase in $C_a-C_i$ will \textbf{\textit{always}} be smaller than the decrease in $g_s$. The Medlyn paper shows that if we assume $g_0=0$ and assume that only VPD is changing, that $\dfrac{C_i}{C_a}$ decreases monotonically with $D$ according to:
+
+\begin{equation}
+\dfrac{C_i}{C_a} = 1-\dfrac{1.6\sqrt{D}}{g1+\sqrt{D}}
+\end{equation}
+
+
+\end{document}
+
+
+
+

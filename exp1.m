@@ -17,18 +17,18 @@ param = [kmax,z,p1,p2,p50,a];
 R     = 450;
 j     = 145;
 T     = 273+28;
-ga    = -1;%-1;
-if ga<0
-    ga = 1/20;
-end
 p_atm    = 1e5;
 r_gas    = 8.314;
 x        = 1.6*r_gas*T/p_atm;
-
+%ga    = -1;
+%if ga<0
+%    ga = 1/20;
+%end
 
 %meteorological conditions (varying)
 pv    = 0:-0.4:-2;      %soil potential (MPa)
-rv    = 0.5:0.01:0.999;  %relative humidity (-)
+rv    = 0.5:0.01:0.99;  %relative humidity (-)
+ra    = [linspace(12,20,50)];
 nx    = length(rv);
 ny    = length(pv);
 
@@ -37,11 +37,12 @@ vpd   = zeros(nx,1);
 pleaf = zeros(nx,ny);
 A     = zeros(nx,ny);
 ci    = zeros(nx,ny);
+q     = zeros(nx,ny);
 
 
 for i = 1:nx  %cycle through vpd values
     rh = rv(i);
-     
+    ga = 1/ra(i);
     %solve for maximum stomatal conductance
     %irrespective of psi_soil
     vpd(i) = get_vpd(rh,T); 
@@ -51,8 +52,8 @@ for i = 1:nx  %cycle through vpd values
     for ii = 1:ny  %cycle through psoil values
         psoil = pv(ii);
         pen = [R,rh,T,gsw_max,ga];  %arrange the forcing data correctly
-        [q,pleaf(i,ii),gsw] = get_vwp(psoil,param,pen); %solve for leaf potential
-        [A(i,ii),ci(i,ii)]  = get_A(j,gsw/x,ga);  %solve for attenutated GPP
+        [q(i,ii),pleaf(i,ii),gsw] = get_vwp(psoil,param,pen); %solve for leaf potential
+        [A(i,ii),ci(i,ii)]        = get_A(j,gsw/x,ga);  %solve for attenutated GPP
     end
 end
 
@@ -69,25 +70,31 @@ for i = 1:ny
     
 end
 
-xdk = figure('units','inches','position',[2,2,8,3],...
-    'PaperSize',[8,3]);
+xdk = figure('units','inches','position',[2,2,8,6],...
+    'PaperSize',[8,6]);
 
-subplot('Position',[0.1,0.15,0.3,0.8])
+subplot('Position',[0.1,0.58,0.3,0.4])
 plot(vpd/1000,A,'Linewidth',1.5)
-ylim([0,25])
+%ylim([0,25])
 xlabel('VPD (kPa)')
 ylabel('GPP (g/m2/d)')
-xlim([0,2.5])
+xlim([0,2])
 
+subplot('Position',[0.1,0.08,0.3,0.4])
+plot(vpd/1000,q*2.5e6,'Linewidth',1.5)
+xlabel('VPD (kPa)')
+ylabel('ET (W/m2)')
+xlim([0,2])
 
-subplot('Position',[0.5,0.15,0.475,0.8])
+subplot('Position',[0.5,0.58,0.475,0.4])
 plot(vpd/1000,ci,'Linewidth',1.5)
 xlabel('VPD (kPa)')
 ylabel('C_i (ppmv)')
-ylim([0,400])
+%ylim([0,200])
 legend(ll,'Location','eastoutside')
-xlim([0,2.5])
+xlim([0,2])
 
+if 1==2
 print(xdk,'fig1','-dpdf')
-
+end
 
